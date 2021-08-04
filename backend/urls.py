@@ -16,10 +16,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from virtual.urls import router
+from rest_framework.authtoken.views import obtain_auth_token
 
+from virtual.views import UserLoginView, LogoutView, ChangePasswordView, SendMailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),
+    path('rest-auth/', include('rest_auth.urls')),
+    path('gettoken/', obtain_auth_token),
+    path("user-login/", UserLoginView.as_view(), name="user_login"),
+    path("logout/", LogoutView.as_view(), name="logout"),
+    path("change_password/<int:pk>/",
+        ChangePasswordView.as_view(),
+        name="auth_change_password",
+    ),
+    path("send-mail/", SendMailView.as_view(), name="send-mail"),
 ]

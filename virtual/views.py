@@ -75,6 +75,12 @@ class UserLoginView(APIView):
         else:
             return Response("Field is required", status=status.HTTP_404_NOT_FOUND)
 
+        def login(self, request, format=None):
+            if request.user.is_authenticated:
+                return Response("Loginin to create room", status=status.HTTP_200_OK)
+            else:
+                return Response("Loginin to create room", status=status.HTTP_404_NOT_FOUND)
+
 
 class LogoutView(APIView):
 
@@ -115,3 +121,5 @@ class SendMailView(APIView):
             )
             return Response({"success": "Message sent successfully"})
         return Response({"success": "Failed"}, status=status.HTTP_400_BAD_REQUEST)
+
+
